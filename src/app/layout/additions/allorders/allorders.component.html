@@ -1,0 +1,60 @@
+@if (isLoading) {
+<div class="h-screen row justify-center items-center">
+    <div class="loader"></div>
+</div>
+}@else {
+@if (allordersList.length !=0) {
+<h1 class="md:text-2xl font-bold my-5">All Your Orders</h1>
+
+<div class="all-orders row my-5">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-16 py-3">Image</th>
+                    <th scope="col" class="px-6 py-3">Product</th>
+                    <th scope="col" class="px-6 py-3">Price</th>
+                    <th scope="col" class="px-6 py-3">Quantity</th>
+                    <th scope="col" class="px-6 py-3">Total</th>
+                    <th scope="col" class="px-6 py-3">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (order of allordersList; track $index) {
+                @for (item of order.cartItems; track $index) {
+                <tr
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="p-4">
+                        <img [src]="item.product.imageCover" class="w-14 md:w-20 max-w-full max-h-full"
+                            [alt]="item.product.title">
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{item.product.title.split(' ').splice(0,2).join(' ')}}
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{item.price}} EGP
+                    </td>
+                    <td class="px-6 py-4">
+                        {{item.count}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{item.price * item.count}} EGP
+                    </td>
+                    <td class="px-6 py-4">
+                        {{order.createdAt | date}}
+                    </td>
+                </tr>
+                }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+}@else {
+    <div class="empty-cart flex flex-col items-center justify-center mt-20 text-center">
+        <i class="fa-solid fa-cart-plus text-main text-9xl"></i>
+        <h2 class="text-3xl md:text-5xl font-semibold mt-5">You Have No Orders Yet !</h2>
+    </div>
+}
+
+}

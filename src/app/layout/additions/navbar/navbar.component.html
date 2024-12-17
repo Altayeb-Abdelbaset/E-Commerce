@@ -1,0 +1,186 @@
+<nav class="bg-main-light border-gray-200 dark:bg-gray-900 sticky top-0 left-0 z-50 w-full">
+    <div class="container mx-auto">
+        <div class="relative flex h-16 items-center justify-between">
+            <!-- Mobile menu button -->
+            <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
+                <button type="button"
+                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    aria-controls="mobile-menu" [attr.aria-expanded]="isMobileMenuOpen()" (click)="toggleMobileMenu()">
+                    <span class="absolute -inset-0.5"></span>
+                    <span class="sr-only">Open main menu</span>
+                    @if (!isMobileMenuOpen) {
+                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                        aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    } @else {
+                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                        aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    }
+                </button>
+            </div>
+            <!-- Logo and desktop menu -->
+            <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
+                <div class="flex flex-shrink-0 items-center cart-logo cursor-pointer" routerLink="home">
+                    <img src="assets/images/freshcart-logo.svg" alt="cart-logo">
+                </div>
+                <div class="hidden md:ml-6 md:block text-sm 2xl:text-lg">
+                    <ul class="flex lg:space-x-3 font-medium">
+
+                        @if (isLogin() == true) {
+                        <li>
+                            <a routerLink="home" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Home"|translate}}</a>
+                        </li>
+                       
+                        <li class="relative">
+                            <div class="absolute -top-4 -right-2">
+                                <i class="fa-solid fa-heart text-red-500 text-xl"></i>
+                            </div>
+                            <a routerLink="wishlist" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Wishlist"|translate}}</a>
+                        </li>
+                        <li>
+                            <a routerLink="allorders" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Orders"|translate}}</a>
+                        </li>
+                        <li>
+                            <a routerLink="products" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Products"|translate}}</a>
+                        </li>
+                        <li>
+                            <a routerLink="categories" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Categoeries"|translate}}</a>
+                        </li>
+                        <li>
+                            <a routerLink="brands" routerLinkActive="bg-main text-white"
+                                class="px-3 py-2 rounded-md">{{"navbar.Brands"|translate}}</a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!-- User menu -->
+
+            <div class=" absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
+                <div class="relative ml-3 ">
+                    <ul class="flex items-center navbar-nav ">
+                        <li class="relative ">
+                            <a class="nav-link relative" routerLinkActive="active-link" routerLink="cart">
+                                <i class="fa-solid fa-cart-shopping text-lg text-main">
+                                </i> 
+                                <span class="badge text-sm absolute -top-4 left-2">{{productCount()}}</span>
+                            </a>
+                        </li>
+                        <button id="dropdownMenuIconHorizontalButton" data-dropdown-toggle="dropdownDotsHorizontal"
+                            class="inline-flex items-center m-4 text-lg font-medium text-center text-gray-900  rounded-lg hover:text-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button">
+                            <i class="fa-solid fa-earth-americas text-main"></i>
+
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdownDotsHorizontal"
+                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton">
+                                <li>
+
+                                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        [class.bg-info]=" _TranslateService.currentLang=='en'"
+                                        (click)="chang('en')">En</a>
+                                </li>
+                                <li>
+
+                                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                        [class.bg-info]="_TranslateService.currentLang=='ar'"
+                                        (click)="chang('ar')">Ar</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <li>
+                            <button type="button"
+                                class="relative flex rounded-full text-sm bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                                id="user-menu-button" aria-expanded="false" aria-haspopup="true"
+                                (click)="toggleUserMenu()">
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="assets/images/user.png" alt="user-photo" />
+                            </button>
+                        </li>
+                    </ul>
+
+
+
+
+
+                    @if (isUserMenuOpen()) {
+                    <div class="absolute right-0 z-10 mt-2 w-auto origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                        <div class="px-4 py-3">
+                            @if (isLogin() == true) {
+                            <div class="flex items-center justify-between mb-2">
+                                <span
+                                    class="block text-lg font-medium text-gray-900 dark:text-white">{{userName()}}</span>
+                                <span
+                                    class="inline-block text-xs font-medium text-white p-1 rounded bg-main">{{userStatus()}}</span>
+                            </div>
+                            <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{userEmail()}}</span>
+                            }
+                        </div>
+                        <ul class="py-2 font-semibold" aria-labelledby="user-menu-button">
+                            @if (isLogin() == false) {
+                            <li>
+                                <a routerLink="login" routerLinkActive="text-main"
+                                    class="inline-block mx-2 rounded px-4 py-1 text-lg text-gray-700 hover:bg-gray-100">Signin</a>
+                            </li>
+                            <li>
+                                <a routerLink="register" routerLinkActive="text-main"
+                                    class="inline-block mx-2 rounded px-4 py-1 text-lg text-gray-700 hover:bg-gray-100">Signup</a>
+                            </li>
+                            }
+                            @else {
+                            <li>
+                                <a routerLinkActive="text-main" (click)="_AuthService.logOut()"
+                                    class="inline-block mx-2 rounded px-4 py-1 text-lg text-gray-700 hover:bg-gray-100 cursor-pointer">SignOut</a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="md:hidden" id="mobile-menu" [ngClass]="{'block': isMobileMenuOpen, 'hidden': !isMobileMenuOpen}">
+        <div class="space-y-1 px-2 pb-3 pt-2">
+            @if (isLogin() == true) {
+            <a routerLink="home" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Home"|translate}}</a>
+            <a routerLink="cart" routerLinkActive="bg-main text-white"
+                class="rounded-md px-3 py-2 text-base font-medium flex items-center">
+                <span>{{"navbar.Cart"|translate}}</span>
+                <span
+                    class="ml-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-sm text-white p-3">{{productCount()}}</span></a>
+            <a routerLink="wishlist" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Wishlist"|translate}}</a>
+            <a routerLink="allorders" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Orders"|translate}}</a>
+            <a routerLink="products" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Products"|translate}}</a>
+            <a routerLink="categories" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Categories"|translate}}</a>
+            <a routerLink="brands" routerLinkActive="bg-main text-white"
+                class="block rounded-md px-3 py-2 text-base font-medium">{{"navbar.Brands"|translate}}</a>
+            }
+        </div>
+    </div>
+</nav>

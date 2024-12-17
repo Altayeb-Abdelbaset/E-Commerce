@@ -1,0 +1,33 @@
+@if (isLoading) {
+<div class="row justify-center items-center h-screen">
+    <div class="loader"></div>
+</div>}
+@else {
+@if (product) {
+<div class="product-details my-5">
+    <div class="row items-center">
+        <div class="w-full md:w-3/12 p-3">
+            <owl-carousel-o [options]="customOptions">
+                @for (img of product.images; track $index) {
+                <ng-template carouselSlide>
+                    <img [src]="img" class="w-full rounded" alt="slider-image">
+                </ng-template>
+                }
+            </owl-carousel-o>
+        </div>
+        <div class="w-full md:w-9/12 p-3">
+            <h1 class="text-lg font-bold">{{product.title}}</h1>
+            <p class="text-sm text-gray-400 my-3">{{product.description}}</p>
+            <span class="text-xs text-main">{{product.category.name}}</span>
+
+            <div class="row justify-between items-center mt-5 mb-2">
+                <span>{{product.price}}EGP</span>
+                <span>{{product.ratingsAverage}} <i class="fa fa-star rating-color"></i></span>
+            </div>
+
+            <button (click)="addProductToCart(product._id)" class="btn-main w-full">Add To Cart</button>
+        </div>
+    </div>
+</div>
+}
+}
